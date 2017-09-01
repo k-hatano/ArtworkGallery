@@ -9,9 +9,12 @@
 import UIKit
 import MediaPlayer
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var collectionView :UICollectionView?
+    @IBOutlet var blurView: UIVisualEffectView?
+    @IBOutlet var blurAlbumArtworkView: UIImageView?
+    @IBOutlet var indicator: UIActivityIndicatorView?
     
     var albumArtworks:[[String:AnyObject]] = []
     
@@ -22,6 +25,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         albumArtworks = [[String:AnyObject]]()
         
+        indicator?.isHidden = false
+        indicator?.startAnimating()
         let albumsQuery = MPMediaQuery.albums()
         if let albums:[MPMediaItemCollection] = albumsQuery.collections {
             for album:MPMediaItemCollection in albums {
@@ -39,6 +44,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
             }
         }
+        indicator?.stopAnimating()
+        indicator?.isHidden = true
         
     }
 
@@ -55,6 +62,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        let returnSize = CGSize(width: self.view.bounds.height / 3.0, height: self.view.bounds.height / 3.0)
+        
+        return returnSize
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
         
@@ -68,6 +82,30 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         imageView.image = artwork
         cell.contentView.addSubview(imageView)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = albumArtworks[indexPath.row]["item"] as! MPMediaItem
+        let artwork = item.value(forProperty: MPMediaItemPropertyArtwork) as? MPMediaItemArtwork
+        let imageSize = blurAlbumArtworkView?.bounds.size
+        
+        let artworkImage = artwork?.image(at: imageSize!)!
+        
+        blurAlbumArtworkView?.image = artworkImage
+        self.blurView?.isHidden = false
+        UIView.animate(withDuration: 0.5) {
+            self.blurView?.contentView.alpha = 1.0
+            self.blurView?.effect = UIBlurEffect(style: .light)
+        }
+    }
+    
+    @IBAction func handleGesture(sender: Any) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.blurView?.contentView.alpha = 0.0
+            self.blurView?.effect = nil
+        }, completion: { (_:Bool) in
+            self.blurView?.isHidden = true
+        })
     }
 
 }
