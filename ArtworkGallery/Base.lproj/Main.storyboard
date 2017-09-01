@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -53,23 +54,57 @@
                                     <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSh-tk-OSZ">
-                                            <rect key="frame" x="48" y="48" width="279" height="279"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </imageView>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="32" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cBS-Gy-cxu">
-                                            <rect key="frame" x="327" y="48" width="293" height="279"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cBS-Gy-cxu">
+                                            <rect key="frame" x="335" y="48" width="285" height="279"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <prototypes>
+                                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlbumSongsCell" id="ikP-oH-vSf">
+                                                    <rect key="frame" x="0.0" y="28" width="285" height="36"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ikP-oH-vSf" id="6fH-ah-Yj9">
+                                                        <rect key="frame" x="0.0" y="0.0" width="285" height="35.5"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAU-Js-9iV">
+                                                                <rect key="frame" x="8" y="6" width="277" height="21"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </tableViewCellContentView>
+                                                </tableViewCell>
+                                            </prototypes>
+                                            <connections>
+                                                <outlet property="dataSource" destination="BYZ-38-t0r" id="7K0-sW-rfL"/>
+                                                <outlet property="delegate" destination="BYZ-38-t0r" id="0fO-Cw-ML4"/>
+                                                <outletCollection property="gestureRecognizers" destination="tC4-pZ-9Bz" appends="YES" id="Xun-4U-YDz"/>
+                                            </connections>
                                         </tableView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSh-tk-OSZ">
+                                            <rect key="frame" x="48" y="48" width="279" height="279"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="XSh-tk-OSZ" secondAttribute="height" multiplier="1:1" id="AFx-yt-Z4X"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <gestureRecognizers/>
-                                    <connections>
-                                        <outletCollection property="gestureRecognizers" destination="63l-tD-cGh" appends="YES" id="Ani-QY-gfF"/>
-                                    </connections>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="cBS-Gy-cxu" secondAttribute="trailing" constant="48" id="5Aq-AO-i3e"/>
+                                        <constraint firstItem="cBS-Gy-cxu" firstAttribute="leading" secondItem="XSh-tk-OSZ" secondAttribute="trailing" id="89Y-YC-VZP"/>
+                                        <constraint firstItem="cBS-Gy-cxu" firstAttribute="top" secondItem="40f-3O-ufj" secondAttribute="top" constant="48" id="8K9-lr-6Gu"/>
+                                        <constraint firstItem="XSh-tk-OSZ" firstAttribute="top" secondItem="40f-3O-ufj" secondAttribute="top" constant="48" id="Bg5-0U-y6Z"/>
+                                        <constraint firstAttribute="bottom" secondItem="cBS-Gy-cxu" secondAttribute="bottom" constant="48" id="HZh-ze-a20"/>
+                                        <constraint firstAttribute="bottom" secondItem="XSh-tk-OSZ" secondAttribute="bottom" constant="48" id="U2X-Ec-9r8"/>
+                                        <constraint firstItem="XSh-tk-OSZ" firstAttribute="leading" secondItem="40f-3O-ufj" secondAttribute="leading" constant="48" id="pU3-nb-NKI"/>
+                                    </constraints>
                                 </view>
                                 <blurEffect style="regular"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="63l-tD-cGh" appends="YES" id="nEf-fD-iW4"/>
+                                </connections>
                             </visualEffectView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Gcm-3m-IfK">
                                 <rect key="frame" x="315" y="169" width="37" height="37"/>
@@ -83,18 +118,20 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="blurAlbumArtworkView" destination="XSh-tk-OSZ" id="iGB-5v-2Zb"/>
+                        <outlet property="blurAlbumSongsView" destination="cBS-Gy-cxu" id="UXw-xD-Ab6"/>
                         <outlet property="blurView" destination="7aG-l4-viq" id="l9x-cg-VyF"/>
                         <outlet property="collectionView" destination="QB6-tT-lo6" id="m2f-XL-qjv"/>
                         <outlet property="indicator" destination="Gcm-3m-IfK" id="YjM-vM-swR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="63l-tD-cGh">
+                <tapGestureRecognizer cancelsTouchesInView="NO" id="63l-tD-cGh">
                     <connections>
                         <action selector="handleGestureWithSender:" destination="BYZ-38-t0r" id="4XH-GO-GI3"/>
                         <outlet property="delegate" destination="BYZ-38-t0r" id="x5f-go-rTM"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer cancelsTouchesInView="NO" id="tC4-pZ-9Bz"/>
             </objects>
             <point key="canvasLocation" x="429.53523238380814" y="216.80000000000001"/>
         </scene>
