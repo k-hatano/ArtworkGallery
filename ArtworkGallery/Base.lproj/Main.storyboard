@@ -66,7 +66,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAU-Js-9iV">
-                                                                <rect key="frame" x="8" y="6" width="277" height="21"/>
+                                                                <rect key="frame" x="7" y="6" width="277" height="21"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                                 <nil key="textColor"/>
@@ -91,18 +91,30 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SLH-EQ-0m2">
                                             <rect key="frame" x="48" y="263" width="279" height="64"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5O4-EH-LFV">
+                                                    <rect key="frame" x="116" y="17" width="46" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="playPauseButtonTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0WY-8W-Mq4"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                         </view>
                                     </subviews>
                                     <gestureRecognizers/>
                                     <constraints>
+                                        <constraint firstItem="SLH-EQ-0m2" firstAttribute="leading" secondItem="XSh-tk-OSZ" secondAttribute="leading" id="0go-JE-XP7"/>
                                         <constraint firstAttribute="trailing" secondItem="cBS-Gy-cxu" secondAttribute="trailing" constant="48" id="5Aq-AO-i3e"/>
                                         <constraint firstItem="cBS-Gy-cxu" firstAttribute="leading" secondItem="XSh-tk-OSZ" secondAttribute="trailing" id="89Y-YC-VZP"/>
                                         <constraint firstItem="cBS-Gy-cxu" firstAttribute="top" secondItem="40f-3O-ufj" secondAttribute="top" constant="48" id="8K9-lr-6Gu"/>
+                                        <constraint firstItem="SLH-EQ-0m2" firstAttribute="bottom" secondItem="XSh-tk-OSZ" secondAttribute="bottom" id="BNI-wY-CqG"/>
                                         <constraint firstItem="XSh-tk-OSZ" firstAttribute="top" secondItem="40f-3O-ufj" secondAttribute="top" constant="48" id="Bg5-0U-y6Z"/>
                                         <constraint firstAttribute="bottom" secondItem="cBS-Gy-cxu" secondAttribute="bottom" constant="48" id="HZh-ze-a20"/>
                                         <constraint firstAttribute="bottom" secondItem="XSh-tk-OSZ" secondAttribute="bottom" constant="48" id="U2X-Ec-9r8"/>
                                         <constraint firstItem="SLH-EQ-0m2" firstAttribute="bottom" secondItem="XSh-tk-OSZ" secondAttribute="bottom" id="eJB-O3-FCa"/>
+                                        <constraint firstItem="SLH-EQ-0m2" firstAttribute="trailing" secondItem="XSh-tk-OSZ" secondAttribute="trailing" id="h0S-7O-RLq"/>
                                         <constraint firstItem="XSh-tk-OSZ" firstAttribute="leading" secondItem="40f-3O-ufj" secondAttribute="leading" constant="48" id="pU3-nb-NKI"/>
                                     </constraints>
                                 </view>
@@ -126,7 +138,9 @@
                         <outlet property="blurAlbumSongsView" destination="cBS-Gy-cxu" id="UXw-xD-Ab6"/>
                         <outlet property="blurView" destination="7aG-l4-viq" id="l9x-cg-VyF"/>
                         <outlet property="collectionView" destination="QB6-tT-lo6" id="m2f-XL-qjv"/>
+                        <outlet property="darkView" destination="SLH-EQ-0m2" id="UI7-Jb-Eq8"/>
                         <outlet property="indicator" destination="Gcm-3m-IfK" id="YjM-vM-swR"/>
+                        <outlet property="playPauseButton" destination="5O4-EH-LFV" id="uJz-op-lNu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

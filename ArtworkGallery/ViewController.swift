@@ -17,6 +17,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var blurAlbumSongsView: UITableView?
     @IBOutlet var indicator: UIActivityIndicatorView?
     
+    @IBOutlet var darkView: UIView?
+    @IBOutlet var playPauseButton: UIButton?
+    
     var albumArtworks:[[String:AnyObject]] = []
     var albumSongs:[String] = []
     var selectedAlbumIndex = 0
@@ -52,11 +55,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         indicator?.isHidden = true
         
         collectionView?.reloadData()
+        
+        updatePlayPauseButtonIcon()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func updatePlayPauseButtonIcon() {
+        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        if musicPlayer.playbackState == .playing {
+            playPauseButton?.titleLabel?.text = "Pause"
+        } else {
+            playPauseButton?.titleLabel?.text = "Play"
+        }
     }
     
     
@@ -213,6 +227,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         musicPlayer.play()
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+// MARK: IBAction
+    
+    @IBAction func playPauseButtonTapped(sender:Any) {
+        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        if musicPlayer.playbackState == .playing {
+            musicPlayer.pause()
+        } else {
+            musicPlayer.play()
+        }
+        updatePlayPauseButtonIcon()
     }
 
 }
