@@ -50,7 +50,7 @@
                             <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7aG-l4-viq">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="center" ambiguous="YES" id="40f-3O-ufj">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="40f-3O-ufj">
                                     <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -62,7 +62,7 @@
                                                     <rect key="frame" x="0.0" y="28" width="285" height="36"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ikP-oH-vSf" id="6fH-ah-Yj9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="285" height="35.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="285" height="36"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAU-Js-9iV">
@@ -89,6 +89,10 @@
                                                 <constraint firstAttribute="width" secondItem="XSh-tk-OSZ" secondAttribute="height" multiplier="1:1" id="AFx-yt-Z4X"/>
                                             </constraints>
                                         </imageView>
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SLH-EQ-0m2">
+                                            <rect key="frame" x="48" y="263" width="279" height="64"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        </view>
                                     </subviews>
                                     <gestureRecognizers/>
                                     <constraints>
@@ -98,6 +102,7 @@
                                         <constraint firstItem="XSh-tk-OSZ" firstAttribute="top" secondItem="40f-3O-ufj" secondAttribute="top" constant="48" id="Bg5-0U-y6Z"/>
                                         <constraint firstAttribute="bottom" secondItem="cBS-Gy-cxu" secondAttribute="bottom" constant="48" id="HZh-ze-a20"/>
                                         <constraint firstAttribute="bottom" secondItem="XSh-tk-OSZ" secondAttribute="bottom" constant="48" id="U2X-Ec-9r8"/>
+                                        <constraint firstItem="SLH-EQ-0m2" firstAttribute="bottom" secondItem="XSh-tk-OSZ" secondAttribute="bottom" id="eJB-O3-FCa"/>
                                         <constraint firstItem="XSh-tk-OSZ" firstAttribute="leading" secondItem="40f-3O-ufj" secondAttribute="leading" constant="48" id="pU3-nb-NKI"/>
                                     </constraints>
                                 </view>

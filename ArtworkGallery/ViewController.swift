@@ -40,7 +40,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     let anArtwork = item.value(forProperty: MPMediaItemPropertyArtwork) as? MPMediaItemArtwork
                     
                     if let title = aTitle, let artwork = anArtwork {
-                        let imageSize = CGSize(width: self.view.bounds.height / 3.0, height: self.view.bounds.height / 3.0)
+                        let imageSize = artwork.bounds.size
                         let artworkImage = artwork.image(at: imageSize)! as UIImage
                         let newItem:[String:AnyObject] = [ "title": title as AnyObject, "artwork": artworkImage, "items": album.items as AnyObject ]
                         albumArtworks.append(newItem)
@@ -51,6 +51,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         indicator?.stopAnimating()
         indicator?.isHidden = true
         
+        collectionView?.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,12 +64,37 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 // MARK: UIGestureRecognizerDelegate
     
     @IBAction func handleGesture(sender: Any) {
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.blurView?.contentView.alpha = 0.0
+//            self.blurView?.effect = nil
+//        }, completion: { (_:Bool) in
+//            self.blurView?.isHidden = true
+//        })
+        
+        let srcArtworkRect = self.blurAlbumArtworkView?.frame
+        var destArtworkRect = collectionView?.layoutAttributesForItem(at: NSIndexPath(row: selectedAlbumIndex, section: 0) as IndexPath)?.frame
+        collectionView?.convert(destArtworkRect!, to: collectionView?.superview)
+        destArtworkRect?.origin.x -= (collectionView?.contentOffset.x)!
+        destArtworkRect?.origin.y -= (collectionView?.contentOffset.y)!
+        
+        let srcSongsRect = self.blurAlbumSongsView?.frame
+        var destSongsRect = destArtworkRect
+        destSongsRect?.size.width = 0
+        
+        self.blurAlbumArtworkView?.frame = srcArtworkRect!
+        self.blurAlbumSongsView?.frame = srcSongsRect!
+        self.blurView?.contentView.alpha = 1.0
+        
         UIView.animate(withDuration: 0.5, animations: {
-            self.blurView?.contentView.alpha = 0.0
+            self.blurAlbumArtworkView?.frame = destArtworkRect!
+            self.blurAlbumSongsView?.frame = destSongsRect!
             self.blurView?.effect = nil
         }, completion: { (_:Bool) in
             self.blurView?.isHidden = true
+            self.blurAlbumArtworkView?.frame = srcArtworkRect!
+            self.blurAlbumSongsView?.frame = srcSongsRect!
         })
+        
     }
     
 // MARK: UICollectionViewDataSource
@@ -95,9 +121,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             subview.removeFromSuperview()
         }
         
+        var imageFrame = cell.frame
+        imageFrame.origin.x = 0
+        imageFrame.origin.y = 0
+        
         let artwork = albumArtworks[indexPath.row]["artwork"] as! UIImage
         let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0,y: 0,width: self.view.bounds.height / 3.0,height: self.view.bounds.height / 3.0)
+        imageView.contentMode = .scaleToFill
+        imageView.frame = imageFrame
         imageView.image = artwork
         cell.contentView.addSubview(imageView)
         return cell
@@ -121,8 +152,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let destArtworkRect = self.blurAlbumArtworkView?.frame
         
         var srcSongsRect = srcArtworkRect
-        srcSongsRect?.origin.x += (srcSongsRect?.size.width)!
-        srcSongsRect?.size.width = -(srcSongsRect?.size.width)!
+        srcSongsRect?.size.width = 0
         let destSongsRect = self.blurAlbumSongsView?.frame
         
         blurAlbumArtworkView?.image = artworkImage
