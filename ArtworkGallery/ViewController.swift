@@ -11,6 +11,9 @@ import MediaPlayer
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     
+    @IBOutlet var blurViewTapRecognizer :UIGestureRecognizer?
+    @IBOutlet var artworkViewTapRecognizer :UIGestureRecognizer?
+    
     @IBOutlet var collectionView :UICollectionView?
     @IBOutlet var blurView: UIVisualEffectView?
     @IBOutlet var blurAlbumArtworkView: UIImageView?
@@ -56,6 +59,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         collectionView?.reloadData()
         
+        self.blurAlbumArtworkView?.removeGestureRecognizer(self.artworkViewTapRecognizer!)
+        self.blurAlbumArtworkView?.isUserInteractionEnabled = true
+        self.blurAlbumArtworkView?.addGestureRecognizer(self.artworkViewTapRecognizer!)
+        
         updatePlayPauseButtonIcon()
     }
 
@@ -77,7 +84,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
 // MARK: UIGestureRecognizerDelegate
     
-    @IBAction func handleGesture(sender: Any) {
+    @IBAction func handleBlurViewTapGesture(sender: Any) {
 //        UIView.animate(withDuration: 0.5, animations: {
 //            self.blurView?.contentView.alpha = 0.0
 //            self.blurView?.effect = nil
@@ -108,6 +115,25 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.blurAlbumSongsView?.frame = srcSongsRect!
         })
         
+    }
+    
+    @IBAction func handleArtworkViewTapGesture(sender: Any) {
+        if (self.darkView?.isHidden)! {
+            self.darkView?.alpha = 0.0
+            self.darkView?.isHidden = false
+            UIView.animate(withDuration: 0.5, animations: {
+                self.darkView?.alpha = 0.5
+            }, completion: { (_:Bool) in
+                
+            })
+        } else {
+            self.darkView?.alpha = 0.5
+            UIView.animate(withDuration: 0.5, animations: {
+                self.darkView?.alpha = 0.0
+            }, completion: { (_:Bool) in
+                self.darkView?.isHidden = true
+            })
+        }
     }
     
 // MARK: UICollectionViewDataSource
