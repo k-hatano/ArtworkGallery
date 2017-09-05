@@ -23,6 +23,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var darkView: UIView?
     @IBOutlet var playPauseButton: UIButton?
     
+    @IBOutlet var artistLabel: UILabel?
+    @IBOutlet var albumLabel: UILabel?
+    
     var albumArtworks:[[String:AnyObject]] = []
     var albumSongs:[String] = []
     var selectedAlbumIndex = 0
@@ -91,6 +94,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 //        }, completion: { (_:Bool) in
 //            self.blurView?.isHidden = true
 //        })
+        
+        self.blurAlbumSongsView?.reloadData()
+        self.darkView?.isHidden = true
         
         let srcArtworkRect = self.blurAlbumArtworkView?.frame
         var destArtworkRect = collectionView?.layoutAttributesForItem(at: NSIndexPath(row: selectedAlbumIndex, section: 0) as IndexPath)?.frame
@@ -183,6 +189,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let imageSize = blurAlbumArtworkView?.bounds.size
         
         let artworkImage = artwork?.image(at: imageSize!)!
+        
+        self.artistLabel?.text = items[0].albumArtist
+        self.albumLabel?.text = items[0].albumTitle
         
         var srcArtworkRect = collectionView.layoutAttributesForItem(at: indexPath)?.frame
         collectionView.convert(srcArtworkRect!, to: collectionView.superview)
