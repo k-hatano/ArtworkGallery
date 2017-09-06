@@ -65,14 +65,30 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="285" height="36"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAU-Js-9iV">
-                                                                <rect key="frame" x="8" y="6" width="269" height="21"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAU-Js-9iV">
+                                                                <rect key="frame" x="35.5" y="8" width="241.5" height="20"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="audio.png" translatesAutoresizingMaskIntoConstraints="NO" id="VPw-ts-x00">
+                                                                <rect key="frame" x="8" y="8" width="19.5" height="19.5"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="VPw-ts-x00" secondAttribute="height" multiplier="1:1" id="oZe-Qd-40C"/>
+                                                                </constraints>
+                                                            </imageView>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="zAU-Js-9iV" firstAttribute="centerY" secondItem="6fH-ah-Yj9" secondAttribute="centerY" id="4zF-lF-dNY"/>
+                                                            <constraint firstAttribute="trailing" secondItem="zAU-Js-9iV" secondAttribute="trailing" constant="8" id="5F3-ah-N0W"/>
+                                                            <constraint firstItem="VPw-ts-x00" firstAttribute="top" secondItem="6fH-ah-Yj9" secondAttribute="top" constant="8" id="69t-zw-eDE"/>
+                                                            <constraint firstItem="VPw-ts-x00" firstAttribute="centerY" secondItem="6fH-ah-Yj9" secondAttribute="centerY" id="Dpj-wu-heH"/>
+                                                            <constraint firstAttribute="bottom" secondItem="zAU-Js-9iV" secondAttribute="bottom" constant="8" id="PcO-Tb-HAi"/>
+                                                            <constraint firstAttribute="bottom" secondItem="VPw-ts-x00" secondAttribute="bottom" constant="8" id="aeS-so-62K"/>
+                                                            <constraint firstItem="zAU-Js-9iV" firstAttribute="top" secondItem="6fH-ah-Yj9" secondAttribute="top" constant="8" id="dBy-GG-7YG"/>
+                                                            <constraint firstItem="VPw-ts-x00" firstAttribute="leading" secondItem="6fH-ah-Yj9" secondAttribute="leading" constant="8" id="k2r-7p-pWp"/>
+                                                            <constraint firstItem="zAU-Js-9iV" firstAttribute="leading" secondItem="VPw-ts-x00" secondAttribute="trailing" constant="8" id="za1-69-IMz"/>
+                                                        </constraints>
                                                     </tableViewCellContentView>
                                                 </tableViewCell>
                                             </prototypes>
@@ -186,4 +202,7 @@
             <point key="canvasLocation" x="429.53523238380814" y="216.80000000000001"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="audio.png" width="29" height="28"/>
+    </resources>
 </document>
