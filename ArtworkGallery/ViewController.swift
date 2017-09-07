@@ -75,7 +75,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func updatePlayPauseButtonIcon() {
-        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
         if musicPlayer.playbackState == .playing {
             playPauseButton?.titleLabel?.text = "Pause"
         } else {
@@ -239,7 +239,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let textField = cell.viewWithTag(1) as! UILabel
         textField.text = item.title
         
-        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
         
         let playingView = cell.viewWithTag(2) as! UIImageView
         playingView.isHidden = musicPlayer.nowPlayingItem?.persistentID == items[indexPath.row].persistentID ? false : true
@@ -254,7 +254,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let items = albumArtworks[selectedAlbumIndex]["items"]! as! [MPMediaItem]
         let item = items[indexPath.row] as MPMediaItem
         
-        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
         if musicPlayer.nowPlayingItem?.persistentID == item.persistentID {
             if musicPlayer.playbackState == .playing {
                 musicPlayer.pause()
@@ -270,7 +270,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             albumsQuery.addFilterPredicate(MPMediaPropertyPredicate(value: item.albumTitle,
                                                                     forProperty: MPMediaItemPropertyAlbumTitle))
             
-            let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+            let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
             musicPlayer.setQueue(with: albumsQuery)
             musicPlayer.play()
         }
@@ -283,7 +283,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 // MARK: IBAction
     
     @IBAction func playPauseButtonTapped(sender:Any) {
-        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
         if musicPlayer.playbackState == .playing {
             musicPlayer.pause()
         } else {
