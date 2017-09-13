@@ -57,6 +57,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
             }
         }
+        
+        albumArtworks.sort(by: { (a:[String:AnyObject], b:[String:AnyObject]) -> Bool in
+            let itemsA = a["items"] as! [MPMediaItem]
+            let itemsB = b["items"] as! [MPMediaItem]
+            
+            let itemA = itemsA[0]
+            let itemB = itemsB[0]
+            
+            if itemA.albumArtist ?? itemA.artist! == itemB.albumArtist ?? itemB.artist! {
+                return itemA.albumTitle! < itemB.albumTitle!
+            } else {
+                return itemA.albumArtist ?? itemA.artist! < itemB.albumArtist ?? itemB.artist!
+            }
+        } )
+        
         indicator?.stopAnimating()
         indicator?.isHidden = true
         
