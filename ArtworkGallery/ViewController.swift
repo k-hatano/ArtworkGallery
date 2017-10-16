@@ -126,11 +126,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.blurAlbumArtworkView?.frame = srcArtworkRect!
         self.blurAlbumSongsView?.frame = srcSongsRect!
         
+        self.blurAlbumArtworkView?.alpha = 1.0
+        self.blurAlbumSongsView?.alpha = 1.0
         UIView.animate(withDuration: 0.5, animations: {
-            self.blurAlbumArtworkView?.frame = destArtworkRect!
-            self.blurAlbumSongsView?.frame = destSongsRect!
+            self.blurAlbumArtworkView?.alpha = 0.0
+            self.blurAlbumSongsView?.alpha = 0.0
+//            self.blurAlbumArtworkView?.frame = destArtworkRect!
+//            self.blurAlbumSongsView?.frame = destSongsRect!
             self.blurView?.effect = nil
         }, completion: { (_:Bool) in
+            self.blurAlbumArtworkView?.alpha = 1.0
+            self.blurAlbumSongsView?.alpha = 1.0
             self.blurView?.isHidden = true
             self.blurAlbumArtworkView?.frame = srcArtworkRect!
             self.blurAlbumSongsView?.frame = srcSongsRect!
