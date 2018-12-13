@@ -19,6 +19,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var blurAlbumArtworkView: UIImageView?
     @IBOutlet var blurAlbumSongsView: UITableView?
     @IBOutlet var indicator: UIActivityIndicatorView?
+    @IBOutlet var progressLabel: UILabel?
     
     @IBOutlet var darkView: UIView?
     @IBOutlet var playPauseButton: UIButton?
@@ -28,13 +29,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var albumArtworks:[[String:AnyObject]] = []
     var albumSongs:[String] = []
-    var selectedAlbumIndex = 0
+    var selectedAlbumIndex:Int?
     
     let artworkCellIdentifier = "AlbumArtworkCell"
     let songsCellIdentifier = "AlbumSongsCell"
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        albumArtworks = [[String:AnyObject]]()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         albumArtworks = [[String:AnyObject]]()
         
@@ -42,18 +49,37 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         indicator?.startAnimating()
         let albumsQuery = MPMediaQuery.albums()
         if let albums:[MPMediaItemCollection] = albumsQuery.collections {
+            var albumIndex = 0
+            progressLabel?.text = "0 / \(albums.count)"
+            progressLabel?.isHidden = false
+            
+            var rect = blurAlbumArtworkView!.bounds
+            rect.size.width /= 2.0
+            rect.size.height /= 2.0
+            
             for album:MPMediaItemCollection in albums {
-                if album.items.count > 0 {
+                if album.items.count > 0 && albumArtworks.count < 10000 {
                     let item = album.items[0] as MPMediaItem
                     let aTitle = item.value(forProperty: MPMediaItemPropertyAlbumTitle) as? String
                     let anArtwork = item.value(forProperty: MPMediaItemPropertyArtwork) as? MPMediaItemArtwork
                     
                     if let title = aTitle, let artwork = anArtwork {
-                        let imageSize = artwork.bounds.size
-                        let artworkImage = artwork.image(at: imageSize)! as UIImage
-                        let newItem:[String:AnyObject] = [ "title": title as AnyObject, "artwork": artworkImage, "items": album.items as AnyObject ]
+                        
+                        UIGraphicsBeginImageContext(rect.size)
+                        let context = UIGraphicsGetCurrentContext()
+                        artwork.image(at: rect.size)?.draw(in: rect)
+                        let artworkImage = UIGraphicsGetImageFromCurrentImageContext()
+                        
+                        UIGraphicsEndImageContext()
+                        
+                        // let artworkImage = artwork.image(at: imageSize)! as UIImage
+                        let newItem:[String:AnyObject] = [ "title": title as AnyObject, "artwork": artworkImage!, "items": album.items as AnyObject ]
                         albumArtworks.append(newItem)
                     }
+                    
+                    albumIndex += 1
+                    progressLabel!.text = aTitle ?? ""
+                    progressLabel!.setNeedsDisplay()
                 }
             }
         }
@@ -74,6 +100,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         indicator?.stopAnimating()
         indicator?.isHidden = true
+        progressLabel?.isHidden = true
         
         collectionView?.reloadData()
         
@@ -114,7 +141,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.darkView?.isHidden = true
         
         let srcArtworkRect = self.blurAlbumArtworkView?.frame
-        var destArtworkRect = collectionView?.layoutAttributesForItem(at: NSIndexPath(row: selectedAlbumIndex, section: 0) as IndexPath)?.frame
+        var destArtworkRect = collectionView?.layoutAttributesForItem(at: NSIndexPath(row: selectedAlbumIndex ?? 0, section: 0) as IndexPath)?.frame
         collectionView?.convert(destArtworkRect!, to: collectionView?.superview)
         destArtworkRect?.origin.x -= (collectionView?.contentOffset.x)!
         destArtworkRect?.origin.y -= (collectionView?.contentOffset.y)!
@@ -123,8 +150,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         var destSongsRect = destArtworkRect
         destSongsRect?.size.width = 0
         
-        self.blurAlbumArtworkView?.frame = srcArtworkRect!
-        self.blurAlbumSongsView?.frame = srcSongsRect!
+//        self.blurAlbumArtworkView?.frame = srcArtworkRect!
+//        self.blurAlbumSongsView?.frame = srcSongsRect!
         
         self.blurAlbumArtworkView?.alpha = 1.0
         self.blurAlbumSongsView?.alpha = 1.0
@@ -243,8 +270,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            let count = albumArtworks[selectedAlbumIndex]["items"]!.count
-            return count!
+            if albumArtworks.count > 0 && selectedAlbumIndex != nil {
+                let count = albumArtworks[selectedAlbumIndex!]["items"]!.count
+                return count!
+            }
+            return 0
         } else {
             return 0
         }
@@ -252,7 +282,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        let items = albumArtworks[selectedAlbumIndex]["items"]! as! [MPMediaItem]
+        let items = albumArtworks[selectedAlbumIndex!]["items"]! as! [MPMediaItem]
         let item = items[indexPath.row] as MPMediaItem
         
         let cell = tableView.dequeueReusableCell(withIdentifier: songsCellIdentifier, for: indexPath)
@@ -272,7 +302,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath){
-        let items = albumArtworks[selectedAlbumIndex]["items"]! as! [MPMediaItem]
+        let items = albumArtworks[selectedAlbumIndex!]["items"]! as! [MPMediaItem]
         let item = items[indexPath.row] as MPMediaItem
         
         let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
