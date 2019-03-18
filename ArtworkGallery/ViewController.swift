@@ -113,7 +113,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        let alertController = UIAlertController(title:"Warning", message:"Received memory warning.", preferredStyle: .alert)
+        present(alertController, animated: true, completion: nil)
     }
     
     func updatePlayPauseButtonIcon() {
